@@ -1,1 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Join Kancha – The Glass Marble Game</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: #1a0a00;
+      color: #f5f5f5;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 32px 20px;
+      text-align: center;
+    }
+    .marble-row { font-size: 48px; margin-bottom: 16px; letter-spacing: 4px; }
+    h1   { color: #f5c842; font-size: 36px; font-weight: 900; margin-bottom: 8px; }
+    .sub { color: #a07840; font-size: 15px; margin-bottom: 40px; }
+    .card {
+      background: #2e1500;
+      border: 1px solid #3d1f00;
+      border-radius: 20px;
+      padding: 28px 24px;
+      width: 100%;
+      max-width: 360px;
+    }
+    .card-title { color: #f5f5f5; font-size: 18px; font-weight: 700; margin-bottom: 6px; }
+    .card-sub   { color: #888; font-size: 14px; margin-bottom: 24px; line-height: 1.5; }
+    .code-box {
+      background: #1a0a00;
+      border: 2px solid #f5c842;
+      border-radius: 14px;
+      padding: 16px 24px;
+      margin-bottom: 20px;
+    }
+    .code-text {
+      color: #f5c842;
+      font-size: 36px;
+      font-weight: 900;
+      letter-spacing: 10px;
+    }
+    .btn {
+      display: block;
+      background: #f5c842;
+      color: #1a0a00;
+      border: none;
+      border-radius: 14px;
+      padding: 16px;
+      width: 100%;
+      font-size: 16px;
+      font-weight: 800;
+      cursor: pointer;
+      text-decoration: none;
+      margin-bottom: 12px;
+    }
+    .btn-outline {
+      background: transparent;
+      border: 1px solid #3d1f00;
+      color: #888;
+      font-size: 14px;
+      font-weight: 600;
+    }
+    .spinner {
+      display: inline-block;
+      width: 20px; height: 20px;
+      border: 3px solid #3d1f00;
+      border-top-color: #f5c842;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin-right: 8px;
+      vertical-align: middle;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    #status { color: #888; font-size: 14px; margin-bottom: 20px; min-height: 22px; }
+    .install-note {
+      margin-top: 24px;
+      color: #555;
+      font-size: 12px;
+      line-height: 1.8;
+    }
+  </style>
+</head>
+<body>
+  <div class="marble-row">🔵🔴🟢</div>
+  <h1>KANCHA</h1>
+  <p class="sub">The Glass Marble Game</p>
+
+  <div class="card" id="main-card">
+    <p class="card-title">You've been challenged! 🎯</p>
+    <p class="card-sub">Opening Kancha…</p>
+
+    <div class="code-box">
+      <div class="code-text" id="code-display">––––––</div>
+    </div>
+
+    <p id="status"><span class="spinner"></span> Launching app…</p>
+
+    <a class="btn" id="open-btn" href="#" style="display:none">
+      Open Kancha App →
+    </a>
+
+    <button class="btn btn-outline" id="manual-btn" style="display:none"
+      onclick="showManual()">
+      Enter code manually
+    </button>
+  </div>
+
+  <div class="card" id="manual-card" style="display:none; margin-top:16px">
+    <p class="card-title">Join manually</p>
+    <p class="card-sub">
+      Open Kancha → <strong>Challenge Friend</strong> → <strong>Join Room</strong><br/>
+      Then enter this code:
+    </p>
+    <div class="code-box">
+      <div class="code-text" id="code-display-2">––––––</div>
+    </div>
+  </div>
+
+  <p class="install-note">
+    Don't have Kancha yet?<br/>
+    Ask your friend for the download link.
+  </p>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const code   = params.get('code') || '';
+
+    if (code) {
+      document.getElementById('code-display').textContent   = code;
+      document.getElementById('code-display-2').textContent = code;
+    }
+
+    const deepLink = code ? `kancha://join/${code}` : 'kancha://';
+    const openBtn  = document.getElementById('open-btn');
+    openBtn.href   = deepLink;
+
+    window.location.href = deepLink;
+
+    setTimeout(() => {
+      document.getElementById('status').textContent = "App didn't open automatically?";
+      openBtn.style.display = 'block';
+      document.getElementById('manual-btn').style.display = 'block';
+    }, 2500);
+
+    function showManual() {
+      document.getElementById('manual-card').style.display = 'block';
+      document.getElementById('manual-btn').style.display  = 'none';
+    }
+  </script>
+</body>
+</html>
 
