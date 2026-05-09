@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Kancha – The Gully Marble Game</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: #1a0a00;
+      color: #f5f5f5;
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 40px;
+      border-bottom: 1px solid rgba(245,200,66,0.1);
+    }
+    .nav-logo { font-size: 22px; font-weight: 900; color: #f5c842; letter-spacing: 1px; }
+    .nav-links { display: flex; gap: 24px; }
+    .nav-links a { color: #888; text-decoration: none; font-size: 14px; font-weight: 500; }
+    .nav-links a:hover { color: #f5c842; }
+
+    /* ── HERO ── */
+    .hero {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 80px 24px 60px;
+      position: relative;
+    }
+
+    .hero-glow {
+      position: absolute;
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(245,200,66,0.12) 0%, transparent 70%);
+      top: 0; left: 50%; transform: translateX(-50%);
+      pointer-events: none;
+    }
+
+    .hero-emoji { font-size: 72px; margin-bottom: 20px; }
+
+    .hero h1 {
+      font-size: 72px;
+      font-weight: 900;
+      color: #fff;
+      line-height: 1;
+      margin-bottom: 8px;
+      letter-spacing: -2px;
+    }
+    .hero h1 span { color: #f5c842; }
+
+    .hero-sub {
+      font-size: 20px;
+      color: #a08060;
+      margin-bottom: 32px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .hero-desc {
+      font-size: 17px;
+      color: #ccc;
+      max-width: 520px;
+      line-height: 1.7;
+      margin-bottom: 40px;
+    }
+
+    .hero-btns { display: flex; gap: 14px; flex-wrap: wrap; justify-content: center; }
+
+    .btn-primary {
+      background: #f5c842;
+      color: #1a0a00;
+      font-size: 16px;
+      font-weight: 800;
+      padding: 14px 32px;
+      border-radius: 30px;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn-primary:hover { opacity: 0.88; }
+
+    .btn-secondary {
+      background: transparent;
+      border: 1.5px solid rgba(245,200,66,0.4);
+      color: #f5c842;
+      font-size: 16px;
+      font-weight: 600;
+      padding: 14px 32px;
+      border-radius: 30px;
+      text-decoration: none;
+    }
+    .btn-secondary:hover { background: rgba(245,200,66,0.08); }
+
+    /* ── BADGES ── */
+    .badges {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+      padding: 0 24px 60px;
+    }
+    .badge {
+      background: rgba(245,200,66,0.1);
+      border: 1px solid rgba(245,200,66,0.25);
+      color: #f5c842;
+      padding: 8px 18px;
+      border-radius: 20px;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    /* ── FEATURES ── */
+    .section {
+      padding: 60px 24px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .section-title {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      color: #f5c842;
+      text-transform: uppercase;
+      text-align: center;
+      margin-bottom: 12px;
+    }
+    .section-heading {
+      font-size: 36px;
+      font-weight: 900;
+      color: #fff;
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 20px;
+    }
+
+    .feature-card {
+      background: #2a1200;
+      border: 1px solid #3d1f00;
+      border-radius: 20px;
+      padding: 28px 24px;
+    }
+    .feature-icon { font-size: 36px; margin-bottom: 14px; }
+    .feature-title { font-size: 18px; font-weight: 700; color: #fff; margin-bottom: 8px; }
+    .feature-desc  { font-size: 14px; color: #888; line-height: 1.6; }
+
+    /* ── HOW TO PLAY ── */
+    .how-section {
+      background: #200e00;
+      padding: 60px 24px;
+    }
+    .steps {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    .step {
+      display: flex;
+      align-items: flex-start;
+      gap: 20px;
+    }
+    .step-num {
+      width: 40px; height: 40px;
+      background: #f5c842;
+      color: #1a0a00;
+      border-radius: 50%;
+      font-weight: 900;
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .step-title { font-size: 17px; font-weight: 700; color: #fff; margin-bottom: 4px; }
+    .step-desc  { font-size: 14px; color: #888; line-height: 1.6; }
+
+    /* ── CTA BOTTOM ── */
+    .cta-section {
+      text-align: center;
+      padding: 80px 24px;
+    }
+    .cta-section h2 { font-size: 40px; font-weight: 900; color: #fff; margin-bottom: 12px; }
+    .cta-section p  { font-size: 16px; color: #888; margin-bottom: 32px; }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid rgba(255,255,255,0.06);
+      padding: 24px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .footer-left { color: #555; font-size: 13px; }
+    .footer-links { display: flex; gap: 20px; }
+    .footer-links a { color: #555; text-decoration: none; font-size: 13px; }
+    .footer-links a:hover { color: #f5c842; }
+
+    @media (max-width: 600px) {
+      .hero h1 { font-size: 48px; }
+      nav { padding: 16px 20px; }
+      .nav-links { display: none; }
+      footer { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-logo">🎱 KANCHA</div>
+    <div class="nav-links">
+      <a href="#features">Features</a>
+      <a href="#how">How to Play</a>
+      <a href="./privacy.html">Privacy</a>
+      <a href="mailto:rohanksandy@gmail.com">Contact</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-glow"></div>
+    <div class="hero-emoji">🎱</div>
+    <h1>KAN<span>CHA</span></h1>
+    <p class="hero-sub">The Gully Marble Game</p>
+    <p class="hero-desc">
+      The classic street marble game — now on your phone. Challenge friends,
+      flick your shooter, knock marbles out of the ring, and climb the leaderboard.
+    </p>
+    <div class="hero-btns">
+      <a class="btn-primary" href="https://play.google.com/store/apps/details?id=com.rohanksandeept.kancha">
+        📲 Download on Google Play
+      </a>
+      <a class="btn-secondary" href="#how">How to Play</a>
+    </div>
+  </section>
+
+  <!-- BADGES -->
+  <div class="badges">
+    <div class="badge">⚡ Real-time Multiplayer</div>
+    <div class="badge">🔥 Wager Mode</div>
+    <div class="badge">🏆 Leaderboard</div>
+    <div class="badge">👥 Challenge Friends</div>
+    <div class="badge">🎯 Daily Challenges</div>
+    <div class="badge">🆓 Free to Play</div>
+  </div>
+
+  <!-- FEATURES -->
+  <section class="section" id="features">
+    <p class="section-title">Why Kancha?</p>
+    <h2 class="section-heading">Woh Gully Wali Feeling 🎱</h2>
+    <div class="features">
+      <div class="feature-card">
+        <div class="feature-icon">⚡</div>
+        <div class="feature-title">Quick Match</div>
+        <div class="feature-desc">Jump into a live match against a real opponent in seconds. No waiting, no bots.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🔥</div>
+        <div class="feature-title">Wager Mode</div>
+        <div class="feature-desc">Bet your Kanchas on every match. Win big or go home — high stakes, high fun.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">👥</div>
+        <div class="feature-title">Challenge Friends</div>
+        <div class="feature-desc">Create a private room and send a link. Your friend taps it and joins instantly.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🏆</div>
+        <div class="feature-title">Ranks & Leaderboard</div>
+        <div class="feature-desc">Rise from Street Kid to Mohalla King. Compete for the top spot every week.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🎯</div>
+        <div class="feature-title">Daily Challenges</div>
+        <div class="feature-desc">Complete daily goals to earn bonus Kanchas and keep your streak alive.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🟢</div>
+        <div class="feature-title">Easy & Hard Mode</div>
+        <div class="feature-desc">Play casual Easy mode or test your skills in Hard mode against tougher opponents.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW TO PLAY -->
+  <section class="how-section" id="how">
+    <div style="max-width:900px; margin:0 auto;">
+      <p class="section-title">Getting Started</p>
+      <h2 class="section-heading">How to Play</h2>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div>
+            <div class="step-title">Set up the ring</div>
+            <div class="step-desc">Marbles are placed inside the circular board at the start of each match.</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div>
+            <div class="step-title">Drag to aim</div>
+            <div class="step-desc">Drag backwards from your shooter marble like a slingshot to set your direction and power.</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div>
+            <div class="step-title">Release to shoot</div>
+            <div class="step-desc">Let go to fire your shooter. Knock opponent marbles out of the ring to capture them.</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">4</div>
+          <div>
+            <div class="step-title">Most captures wins</div>
+            <div class="step-desc">The player who knocks out the most marbles when the ring is empty wins the match.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section">
+    <h2>Ready to Play? 🎱</h2>
+    <p>Download free on Android. Challenge your friends today.</p>
+    <a class="btn-primary" href="https://play.google.com/store/apps/details?id=com.rohanksandeept.kancha">
+      📲 Get Kancha on Google Play
+    </a>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-left">© 2025 Gully Studios · Made with ❤️ in India</div>
+    <div class="footer-links">
+      <a href="./privacy.html">Privacy Policy</a>
+      <a href="mailto:rohanksandy@gmail.com">Contact</a>
+    </div>
+  </footer>
+
+</body>
+</html>
